@@ -5,7 +5,7 @@
     <t-table
       :data="dataSource"
       :columns="columns"
-      rowKey="id"
+      rowKey="index"
       :table-layout="tableLayout"
       bordered
     ></t-table>
@@ -56,10 +56,32 @@ export default {
       msg: 'Welcome to Your Vue.js App',
       tableLayout: 'fixed',
       dataSource: data,
-      columns: [SingleColumn]
+      columns: [
+        {
+          colKey: 'applicant',
+          title: '申请人',
+          width: 100
+        },
+        {
+          colKey: 'status',
+          title: '审批状态',
+          width: 120
+        },
+        { colKey: 'detail.email', title: '邮箱地址', width: 180 },
+        { colKey: 'matters', title: '申请事项', width: 200 },
+        {
+          colKey: 'createTime',
+          title: '申请日期',
+          width: 120,
+          fixed: this.rightFixedColumn >= 2 ? 'right' : undefined
+        }
+      ]
     }
   },
   mounted () {
+    setTimeout(() => {
+      this.columns = [SingleColumn, ...this.columns]
+    })
     setTimeout(() => {
       this.columns = [...this.columns, tableOperationColumn]
     })
